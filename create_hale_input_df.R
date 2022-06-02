@@ -1,9 +1,9 @@
 library(data.table)
-source("/ihme/cc_resources/libraries/gbd_env/r/get_population.R")
-source("/ihme/cc_resources/libraries/gbd_env/r/get_draws.R")
-source("/ihme/cc_resources/libraries/gbd_env/r/get_age_metadata.R")
-source("/ihme/cc_resources/libraries/gbd_env/r/get_cause_metadata.R")
-setwd("/mnt/team/costeffectiveness/NPC/hale/")
+source("gbdenv_file_path/get_population.R")
+source("gbdenv_file_path/get_draws.R")
+source("gbdenv_file_path/get_age_metadata.R")
+source("gbdenv_file_path/get_cause_metadata.R")
+setwd("data_file_path")
 # Read in the list of DEX causes, the map from GBD causes to aggregate DEX causes, and the definitions of "case" for each cause
 cause_map <- fread("./gbd_to_dex_cause_map.csv")
 setnames(cause_map, "gbd_cause_id", "cause_id")
@@ -145,4 +145,4 @@ setcolorder(dt,
               "deaths", "all_cause_deaths",
               "ylds", "all_cause_ylds"))
 
-fwrite(dt, "/mnt/team/costeffectiveness/NPC/hale/hale_decomp_input_data.csv")
+fwrite(dt, "data_file_path/hale_decomp_input_data.csv")

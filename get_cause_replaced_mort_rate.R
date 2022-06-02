@@ -1,5 +1,5 @@
 library(data.table)
-setwd("/mnt/team/costeffectiveness/NPC/hale/")
+setwd("data_file_path")
 year1 <- 1996
 year2 <- 2016
 output_file <- "./cause_replaced_mort_rates.csv"

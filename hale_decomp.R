@@ -1,5 +1,5 @@
 library(data.table)
-setwd("/mnt/team/costeffectiveness/NPC/hale/")
+setwd("data_file_path")
 # The Utility Funcs
 gen_age_length <- function (dt, terminal_age = 110, terminal_length = 15, process_terminal = T) 
 {
