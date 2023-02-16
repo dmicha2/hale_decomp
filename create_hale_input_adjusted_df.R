@@ -527,8 +527,7 @@ for (age_grp in 6:7){
 }
 
 # overwrite hale_decomp_input_data with updated values
-fwrite(dt, "./hale_decomp_input_data_2_v3.csv")
+fwrite(dt, "./hale_decomp_input_data_final.csv")
 
 dt_draw_0 <- dt[draw == 0, ]
 fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/HALE/hale_decomp_input_data_final_draw0.csv")
-
