@@ -1,12 +1,12 @@
 library(data.table)
-setwd("data_file_path")
+setwd("/home/j/Project/Cost_Effectiveness/BEA/BEA_data_2023/HALE")
 year1 <- 1996
 year2 <- 2016
 output_file <- "./cause_replaced_mort_rates.csv"
 
 # Read in data. This csv should have columns for cause_id, age_group_id, year_id,
 # population, cases, deaths, all_cause_deaths, and ylds
-dt <- fread("./hale_decomp_input_data.csv")
+dt <- fread("./hale_decomp_input_data_final.csv")
 # Convert cases and deaths to case rates and mortality rates.
 dt[, case_rate := cases / population]
 dt[, deaths_per_case := deaths / cases]
@@ -31,8 +31,10 @@ cause_replace <- function(d, start_year, end_year){
   ys <- as.character(c(start_year, end_year))
   # Create cause-replaced mortality rates by taking the cause-deleted mortality rate for a given year and adding
   # to it the product of the case rate for the same year times the deaths per case for the other year.
-  d[, paste0("crmr_", ys) := get(paste0("cause_del_mr_", ys)) + get(paste0("case_rate_", ys)) * get(paste0("deaths_per_case_", ys[2:1]))]
-  d[, paste0("cr_ylds_", ys) := get(paste0("cause_del_ylds_", ys)) + get(paste0("cases_", ys)) * get(paste0("ylds_per_case_", ys[2:1]))]
+  d[, paste0("crmr_", ys[1]) := get(paste0("cause_del_mr_", ys[1])) + get(paste0("case_rate_", ys[1])) * get(paste0("deaths_per_case_", ys[2]))]
+  d[, paste0("cr_ylds_", ys[1]) := get(paste0("cause_del_ylds_", ys[1])) + get(paste0("cases_", ys[1])) * get(paste0("ylds_per_case_", ys[2]))]
+  d[, paste0("crmr_", ys[2]) := get(paste0("cause_del_mr_", ys[2])) + get(paste0("case_rate_", ys[2])) * get(paste0("deaths_per_case_", ys[1]))]
+  d[, paste0("cr_ylds_", ys[2]) := get(paste0("cause_del_ylds_", ys[2])) + get(paste0("cases_", ys[2])) * get(paste0("ylds_per_case_", ys[1]))]
   d[]
   return(d)
 }
@@ -41,12 +43,20 @@ dt <- cause_replace(dt, year1, year2)
 
 id_vars <- c("cause_id", "draw", "sex_id", "location_id", "age_group_id",
              "age_group_years_start", "age_group_years_end")
-measure_vars <- c(outer(c("crmr", "cr_ylds", "acmr", "ylds", "cases"), c(1996, 2016), paste, sep="_"))
+measure_vars <- c(outer(c("crmr", "cr_ylds", "acmr", "ylds", "all_cause_ylds",
+                          "ylds_per_case", "cases",  "case_rate", "population"),
+                        c(1996, 2016),
+                        paste,
+                        sep="_"))
 dt <- melt(dt, id.vars = id_vars, measure.vars=measure_vars)
 dt[, year := as.integer(gsub(".*_", "", variable))]
 dt[, variable := gsub("_[0-9]+", "", variable)]
 dt <- dcast(dt, cause_id + draw + sex_id + location_id + age_group_id + age_group_years_start + age_group_years_end + year ~ variable,
             value.var = "value")
+
+# creating a data frame containing draw 0 only.
+dt_draw_0 <- dt[draw == 0, ]
+fwrite(dt_draw_0, "./draw_0_cause_replaced_mort_rates.csv")
 
 # Write to a file, checking to make sure you don't overwrite pre-existing files.
 if(!file.exists(output_file)){
