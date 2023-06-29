@@ -645,19 +645,6 @@ for (index in 1:length(dropped_dalys_ids)) {
   dropped_cause_id <- dropped_dalys_ids[index]
   dt_dropped_dalys <- rbind(dt_dropped_dalys, dt[dex_cause_id == dropped_cause_id, ])
 }
-dt_dropped_dalys_draw_0 <- dt_dropped_dalys[draw == 0, ]
-fwrite(dt_dropped_dalys_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/investigation_files/hale_input_data_adjusted_draw0.csv")
-
-
-
-# overwrite hale_decomp_input_data with updated values
-fwrite(dt, "./hale_decomp_input_data_final.csv")
-
-dt_draw_0 <- dt[draw == 0, ]
-fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/HALE/hale_decomp_input_data_final_draw0.csv")
-
-
-
 
 ## Aggregating rows for duplicate expenditure data DEX -> GBD causes
 
@@ -705,9 +692,6 @@ dex_gbd_agg_ylds[, cause_id := NULL]
 dex_gbd_agg_ylds <- unique(dex_gbd_agg_ylds)
 dt <- merge(dt, dex_gbd_agg_ylds, by=c("draw", "age_group_id", "year_id", "dex_cause_id"), all=TRUE)
 
-#inspecting results
-dt_draw_0 <- dt[draw == 0, ]
-fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/investigation_files/hale_aggegate_results_dex_gbd.csv")
 
 #deleting redundant columns
 dt <- dt %>% select(-c(cs_deaths, cases, case_rate, cs_ylds))
@@ -799,9 +783,6 @@ dt <- rename(dt, cs_deaths = deaths_sum
 
 dt$death_lt_case <- ifelse(dt$cs_deaths>dt$cases,"1","0")
 
-#inspecting results
-dt_draw_0 <- dt[draw == 0, ]
-fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/investigation_files/aggregate_results_death_lt_case_draw0.csv")
 
 #summary of death>cases for two years in file: "dex_gbd_agg_summary_death_lt_cases_draw0.xlsx"
 
