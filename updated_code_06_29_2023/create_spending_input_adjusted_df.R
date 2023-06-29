@@ -427,11 +427,6 @@ dt[is.na(ac_spending), ac_spending := 0]
 # dt[cause_id %in% pops_cids, `:=`(cases=population, case_rate=1)]
 
 
-TESTDT <- dt[is.na(cases), ]
-fwrite(TESTDT, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/investigation_files/spending_input_dt_cases_are_na.csv")
-dt_cause_id_456 <- dt[cause_id == 456, ]
-fwrite(dt_cause_id_456, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/investigation_files/spending_input_dt_cause_id_456.csv")
-
 setcolorder(dt,
             c("cause_id", "gbd_cause_name", "dex_cause_id", "dex_cause_name", "case_definition",
               "draw",
@@ -440,8 +435,6 @@ setcolorder(dt,
               "population", "cases", "case_rate",
               "cs_deaths", "ac_deaths",
               "cs_spending"))
-
-fwrite(dt, "./spending_decomp_input_data.csv")
 
 
 ######Code by Esha####################
@@ -470,12 +463,6 @@ dt$ac_deaths[dt$ac_deaths==0] <- daly_death_dt$ac_deaths[daly_death_dt$cause_id=
 
 dt <- subset(dt, select = -c(ac_spending.x))
 dt <- dt %>% rename("ac_spending" = "ac_spending.y")
-
-fwrite(dt, "./spending_decomp_input_data_adjusted.csv")
-
-dt_draw_0 <- dt[draw == 0, ]
-fwrite(dt_draw_0, "./spending_decomp_input_data_adjusted_draw0.csv")
-
 
 
 #dt <- fread("./spending_decomp_input_data_adjusted.csv")
@@ -534,10 +521,6 @@ dex_gbd_agg_case_rate <- setDT(dex_gbd_agg_case_rate)
 dex_gbd_agg_case_rate[, cause_id := NULL]
 dex_gbd_agg_case_rate <- unique(dex_gbd_agg_case_rate)
 dt <- merge(dt, dex_gbd_agg_case_rate, by=c("draw", "age_group_id", "year_id", "dex_cause_id"), all=TRUE)
-
-#inspecting results
-dt_draw_0 <- dt[draw == 0, ]
-fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/data_new_naming_convention/investigation_files/aggegate_results_dex_gbd.csv")
 
 #deleting redundant columns
 dt <- dt %>% select(-c(cs_deaths, cases, case_rate))
@@ -629,10 +612,6 @@ dt <- rename(dt, cs_deaths = deaths_sum
 ## Indicator for death>cases
 
 dt$death_lt_case <- ifelse(dt$cs_deaths>dt$cases,"1","0")
-
-# #inspecting results
-# dt_draw_0 <- dt[draw == 0, ]
-# fwrite(dt_draw_0, "/snfs1/Project/Cost_Effectiveness/BEA/BEA_data_2023/investigation_files/aggregate_results_death_lt_case_draw0.csv")
 
 #summary of death>cases for two years in file: "dex_gbd_agg_summary_death_lt_cases_draw0.xlsx"
 
