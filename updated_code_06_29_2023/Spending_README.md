@@ -12,14 +12,12 @@ Takes as arguments a file path for input data and a file path for output data. R
 
 get_cause_replaced_mort_rate_spending.R
 
-Takes as arguments a file path for input data and a file path for output data. Reads in the spending_decomp_input_data_dex_gdp_aggegate_death_agg.csv as input data and returns the spending_cause_replaced_mort_rates_dex_gdp_aggregated_death_agg.csv.
+Takes as arguments a file path for input data and a file path for output data. Reads in the spending_decomp_input_data_dex_gdp_aggegate_death_agg.csv as input data and returns the spending_not_cause_replaced_mort_rates.csv.
 
 spending_decomp.R
 
-Reads in the spending_decomp_input_data_dex_gdp_aggegate_death_agg.csv and spending_cause_replaced_mort_rates_dex_gdp_aggregated_death_agg.csv as input data and produces decomposition results files. The output files are spending_cause_replaced_life_table_dex_gdp_aggregated_death_agg.csv, spending_decomp_results_dex_gdp_aggregated_death_agg.csv (for age 0), and spending_decomp_results_by_draw_at**age**_dex_gdp_aggregated_death_agg.csv (for **age** groups 15,30,45,55,65,75,85).
-Additionally, also performs decomposition analysis on mean and ui to give spending_decomp_results_mean_ui_dex_gdp_aggregated_death_agg.csv (for age group 0), and spending_decomp_results_mean_ui_at**age**_dex_gdp_aggregated_death_agg.csv (for **age** groups 15,30,45,55,65,75,85).
-Also produces year(1996, and 2016) averaged differences in spending_effect and ex_effect for all draws named spending_decomp_results_by_draw_at**age**_yr_avg.csv, and for means of draws named spending_decomp_results_mean_at**age**_yr_avg.csv.
-Additionally, produces year averaged differences between age-agroups for all draws named spending_decomp_effects_age_grp.csv and for means of draws named spending_decomp_mean_draw_effects_age_grp.csv.
+Reads in the spending_decomp_input_data_dex_gdp_aggegate_death_agg.csv and spending_not_cause_replaced_mort_rates.csv as input data and produces decomposition results files. The output files are spending_not_cause_replaced_life_table.csv, non_cr_spending_decomp_results_at0.csv (for age 0), and non_cr_spending_decomp_results_by_draw_at**age**.csv (for **age** groups 15,30,45,55,65,75,85).
+Additionally, also performs decomposition analysis on mean and ui to give non_cr_spending_decomp_results_mean_ui_at**age**.csv (for **age** groups 0,15,30,45,55,65,75,85).
 
 Inputs
 
