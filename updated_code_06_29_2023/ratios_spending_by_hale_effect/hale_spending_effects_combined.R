@@ -124,15 +124,15 @@ mean_ui_dt <- rbind(mean_ui_dt, all_cause_row)
 mean_ui_dt$quadrant_mean_1000draw <- "NA"
 
 mean_ui_dt <- mean_ui_dt %>% 
-  mutate(quadrant_mean_1000draw = ifelse(mean_lt_spending_effect_1000draw > 0 & mean_hale_effect_1000draw < 0, "dominated", quadrant_mean_1000draw))
+  mutate(quadrant_mean_1000draw = ifelse(mean_lt_spending_effect_1000draw > 0 & mean_hale_effect_1000draw < 0, "north-west (dominated)", quadrant_mean_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
-    quadrant_mean_1000draw = if_else(mean_lt_spending_effect_1000draw < 0 & mean_hale_effect_1000draw > 0, "cost-saving", quadrant_mean_1000draw))
+    quadrant_mean_1000draw = if_else(mean_lt_spending_effect_1000draw < 0 & mean_hale_effect_1000draw > 0, "south_east (cost-saving)", quadrant_mean_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
-    quadrant_mean_1000draw = if_else(mean_lt_spending_effect_1000draw > 0 & mean_hale_effect_1000draw > 0, "icer", quadrant_mean_1000draw))
+    quadrant_mean_1000draw = if_else(mean_lt_spending_effect_1000draw > 0 & mean_hale_effect_1000draw > 0, "north-east (icer)", quadrant_mean_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
@@ -142,15 +142,15 @@ mean_ui_dt <- mean_ui_dt %>%
 mean_ui_dt$quadrant_median_1000draw <- "NA"
 
 mean_ui_dt <- mean_ui_dt %>% 
-  mutate(quadrant_median_1000draw = ifelse(median_corresponding_lt_spending_effect > 0 & median_corresponding_hale_effect < 0, "dominated", quadrant_median_1000draw))
+  mutate(quadrant_median_1000draw = ifelse(median_corresponding_lt_spending_effect > 0 & median_corresponding_hale_effect < 0, "north-west (dominated)", quadrant_median_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
-    quadrant_median_1000draw = if_else(median_corresponding_lt_spending_effect < 0 & median_corresponding_hale_effect > 0, "cost-saving", quadrant_median_1000draw))
+    quadrant_median_1000draw = if_else(median_corresponding_lt_spending_effect < 0 & median_corresponding_hale_effect > 0, "south_east (cost-saving)", quadrant_median_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
-    quadrant_median_1000draw = if_else(median_corresponding_lt_spending_effect > 0 & median_corresponding_hale_effect > 0, "icer", quadrant_median_1000draw))
+    quadrant_median_1000draw = if_else(median_corresponding_lt_spending_effect > 0 & median_corresponding_hale_effect > 0, "north-east (icer)", quadrant_median_1000draw))
 
 mean_ui_dt <- mean_ui_dt %>% 
   mutate(
